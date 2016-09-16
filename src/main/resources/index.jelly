@@ -1,0 +1,7 @@
+<?jelly escape-by-default='true'?>
+<!--
+  This view is used to render the installed plugins page.
+-->
+<div>
+    Simple plugin to send a message to a Slack incoming webhook.
+</div>
