@@ -5,6 +5,8 @@ import hudson.Launcher;
 import hudson.Util;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import org.jenkinsci.plugins.tokenmacro.MacroEvaluationException;
+import org.jenkinsci.plugins.tokenmacro.TokenMacro;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -51,9 +53,16 @@ class SlackStepDelegate {
     }
 
     public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath filePath, @Nonnull Launcher launcher, @Nonnull TaskListener taskListener) throws InterruptedException, IOException {
+        String expandedText;
+        try {
+            expandedText = TokenMacro.expandAll(run, filePath, taskListener, getMessage());
+        } catch (MacroEvaluationException e) {
+            expandedText = e.getMessage();
+        }
+
         SlackMessage slackMessage = new SlackMessage.SlackMessageBuilder()
                 .setBuildNumber(run.getNumber())
-                .setText(getMessage())
+                .setText(expandedText)
                 .setWebhookUrl(getWebhookUrl())
                 .setLogger(taskListener.getLogger())
                 .setJobName(run.getDisplayName())

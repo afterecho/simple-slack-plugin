@@ -35,7 +35,8 @@ There are three parameters, two of which are mandatory.
 
 The *message* is the message
 you want to send.  At this time it is a simple text string; no substitutions
-or fancy stuff like that.
+or fancy stuff like that.  The message is run through the [Token Macro Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Token+Macro+Plugin)
+for your token expansion pleasure.
 
 The *webhookUrl* is the URL from Slack you get when
 you configure a webhook.  It must start with http:// or https://
