@@ -12,8 +12,6 @@ class Validation {
             throws IOException, ServletException {
         if (value.length() == 0)
             return FormValidation.error("Please set a message");
-        if (value.length() < 4)
-            return FormValidation.warning("Isn't the message too short?");
         return FormValidation.ok();
     }
 
@@ -31,7 +29,7 @@ class Validation {
         if (value.length() == 0)
             return FormValidation.ok();
         if (!value.startsWith("#") && !value.startsWith("@"))
-            return FormValidation.error("Must start with # for a channel or @ for a user");
+            return FormValidation.warning("Should start with # for a channel or @ for a user");
         if (value.length() == 1)
             return FormValidation.error("Please supply a #channel or @user");
         return FormValidation.ok();

@@ -60,13 +60,20 @@ class SlackStepDelegate {
             expandedText = e.getMessage();
         }
 
+        String expandedChannel;
+        try {
+            expandedChannel = TokenMacro.expandAll(run, filePath, taskListener, getChannel());
+        } catch (MacroEvaluationException e) {
+            expandedChannel = e.getMessage();
+        }
+
         SlackMessage slackMessage = new SlackMessage.SlackMessageBuilder()
                 .setBuildNumber(run.getNumber())
                 .setText(expandedText)
                 .setWebhookUrl(getWebhookUrl())
                 .setLogger(taskListener.getLogger())
                 .setJobName(run.getDisplayName())
-                .setChannel(getChannel())
+                .setChannel(expandedChannel)
                 .build();
         slackMessage.doSlackNotification();
     }
