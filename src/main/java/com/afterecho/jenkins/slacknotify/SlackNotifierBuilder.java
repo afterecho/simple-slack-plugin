@@ -96,10 +96,5 @@ public class SlackNotifierBuilder extends Builder implements SimpleBuildStep {
                 throws IOException, ServletException {
             return Validation.doCheckWebhookUrl(value);
         }
-
-        public FormValidation doCheckChannel(@QueryParameter String value)
-                throws IOException, ServletException {
-            return Validation.doCheckChannel(value);
-        }
     }
 }
